@@ -43,14 +43,29 @@ jobs:
       - name: Build JCL Generator (${{ matrix.goos }})
         run: |
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o jclgen${{ matrix.ext }} ./cmd/main.go
+        shell: bash
+        if: runner.os != 'Windows'
+
+      - name: Build JCL Generator (Windows)
+        run: |
+          $env:GOOS="windows"
+          $env:GOARCH="amd64"
+          go build -o jclgen.exe ./cmd/main.go
+        shell: pwsh
+        if: runner.os == 'Windows'
 
       - name: Create Release Directory
         run: mkdir -p release
 
-      - name: Package as ZIP
-        run: |
-          zip -r release/jclgen-${{ matrix.goos }}.zip jclgen${{ matrix.ext }}
+      - name: Package as ZIP (Linux/macOS)
+        run: zip -r release/jclgen-${{ matrix.goos }}.zip jclgen${{ matrix.ext }}
         shell: bash
+        if: runner.os != 'Windows'
+
+      - name: Package as ZIP (Windows)
+        run: Compress-Archive -Path jclgen.exe -DestinationPath release/jclgen-windows.zip
+        shell: pwsh
+        if: runner.os == 'Windows'
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
