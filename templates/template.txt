@@ -1,0 +1,179 @@
+//{{.JobName}} JOB (ACCT),'Generated JCL'
+{{- if .Class }}
+// CLASS={{.Class}}
+{{- end }}
+{{- if .MsgClass }}
+// MSGCLASS={{.MsgClass}}
+{{- end }}
+{{- if .MsgLevel }}
+// MSGLEVEL={{.MsgLevel}}
+{{- end }}
+{{- if .Notify }}
+// NOTIFY={{.Notify}}
+{{- end }}
+{{- if .Prty }}
+// PRTY={{.Prty}}
+{{- end }}
+{{- if .Region }}
+// REGION={{.Region}}
+{{- end }}
+{{- if .Restart }}
+// RESTART={{.Restart}}
+{{- end }}
+{{- if .Time }}
+// TIME={{.Time}}
+{{- end }}
+{{- if .TypeRun }}
+// TYPRUN={{.TypeRun}}
+{{- end }}
+{{- if .User }}
+// USER={{.User}}
+{{- end }}
+
+//STEP1 EXEC {{if .ExecPROC}}PROC={{.ExecPROC}}{{else}}PGM={{.ExecPGM}}{{end}}
+{{- if .ExecParm }}
+// PARM={{.ExecParm}}
+{{- end }}
+{{- if .Cond }}
+// COND={{.Cond}}
+{{- end }}
+{{- if .AddrSpc }}
+// ADDRSPC={{.AddrSpc}}
+{{- end }}
+{{- if .TimeStep }}
+// TIME={{.TimeStep}}
+{{- end }}
+
+// DD Statements
+{{- if .DSName }}
+//DD01 DD DSN={{.DSName}},
+{{- if .DISP }}
+// DISP={{.DISP}},
+{{- end }}
+{{- if .UNIT }}
+// UNIT={{.UNIT}},
+{{- end }}
+{{- if .Volume }}
+// VOL={{.Volume}},
+{{- end }}
+{{- if .Space }}
+// SPACE={{.Space}}({{.SpaceUnit}}),
+{{- end }}
+{{- if .DCB }}
+// DCB={{.DCB}},
+{{- end }}
+{{- if .LRECL }}
+// LRECL={{.LRECL}},
+{{- end }}
+{{- if .BLKSIZE }}
+// BLKSIZE={{.BLKSIZE}},
+{{- end }}
+{{- if .RecFM }}
+// RECFM={{.RecFM}},
+{{- end }}
+{{- if .ExpDT }}
+// EXPDT={{.ExpDT}},
+{{- end }}
+{{- if .RetPD }}
+// RETPD={{.RetPD}}
+{{- end }}
+{{- end }}
+
+// SYSIN and SYSOUT
+{{- if .SysIn }}
+//SYSIN DD {{.SysIn}}
+{{- end }}
+{{- if .SysOut }}
+//SYSOUT DD SYSOUT={{.SysOut}}
+{{- end }}
+
+// JES2/JES3 Statements
+{{- if .JobParm }}
+// JOBPARM {{.JobParm}}
+{{- end }}
+{{- if .Output }}
+// OUTPUT {{.Output}}
+{{- end }}
+{{- if .Route }}
+// ROUTE {{.Route}}
+{{- end }}
+{{- if .Main }}
+// MAIN {{.Main}}
+{{- end }}
+{{- if .Format }}
+// FORMAT {{.Format}}
+{{- end }}
+{{- if .DataSet }}
+// DATASET {{.DataSet}}
+{{- end }}
+
+// Miscellaneous Parameters
+{{- if .AddrSpcExec }}
+// ADDRSPC EXEC={{.AddrSpcExec}}
+{{- end }}
+{{- if .Bytes }}
+// BYTES={{.Bytes}}
+{{- end }}
+{{- if .Lines }}
+// LINES={{.Lines}}
+{{- end }}
+{{- if .Pages }}
+// PAGES={{.Pages}}
+{{- end }}
+{{- if .Perform }}
+// PERFORM={{.Perform}}
+{{- end }}
+{{- if .RD }}
+// RD={{.RD}}
+{{- end }}
+{{- if .Chars }}
+// CHARS={{.Chars}}
+{{- end }}
+{{- if .FCB }}
+// FCB={{.FCB}}
+{{- end }}
+{{- if .Flash }}
+// FLASH={{.Flash}}
+{{- end }}
+{{- if .Forms }}
+// FORMS={{.Forms}}
+{{- end }}
+{{- if .Modify }}
+// MODIFY={{.Modify}}
+{{- end }}
+{{- if .PrtAttrs }}
+// PRTATTRS={{.PrtAttrs}}
+{{- end }}
+{{- if .UCS }}
+// UCS={{.UCS}}
+{{- end }}
+{{- if .Writer }}
+// WRITER={{.Writer}}
+{{- end }}
+
+// Job Steps (Future Enhancement - v0.3)
+{{- range .Steps }}
+//{{.StepName}} EXEC PGM={{.ExecPGM}}
+{{- if .ExecParm }}
+// PARM={{.ExecParm}}
+{{- end }}
+{{- if .Cond }}
+// COND={{.Cond}}
+{{- end }}
+{{- if .Time }}
+// TIME={{.Time}}
+{{- end }}
+{{- end }}
+
+// System-Level Overrides
+{{- if .SystemOverrides }}
+{{- if .SystemOverrides.AddrSpace }}
+// ADDRSPACE={{.SystemOverrides.AddrSpace}}
+{{- end }}
+{{- if .SystemOverrides.Perform }}
+// PERFORM={{.SystemOverrides.Perform}}
+{{- end }}
+{{- if .SystemOverrides.RD }}
+// RD={{.SystemOverrides.RD}}
+{{- end }}
+{{- end }}
