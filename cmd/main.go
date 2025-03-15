@@ -40,5 +40,6 @@ func main() {
 		log.Fatalf("Error generating JCL: %v", err)
 	}
 
+	// Print success message
 	fmt.Printf("✅ JCL generated successfully: %s.jcl\n", *outputFile)
 }
