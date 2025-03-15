@@ -1,5 +1,6 @@
 package jcl
 
+// JCLParameters defines the structure for JCL parameterization.
 type JCLParameters struct {
 	// JOB Statement Parameters
 	JobName  *string // Job name (1-8 characters)
@@ -75,6 +76,7 @@ type JCLParameters struct {
 	SystemOverrides *JCLSystemOverrides // Advanced tuning
 }
 
+// JCLStep represents an execution step inside a JCL job.
 type JCLStep struct {
 	StepName *string // Name of the step
 	ExecPGM  *string // Program to execute
@@ -84,6 +86,7 @@ type JCLStep struct {
 	Time     *string // Time limit
 }
 
+// JCLSystemOverrides provides system-level settings for the JCL execution.
 type JCLSystemOverrides struct {
 	AddrSpace *string // Address space allocation
 	Perform   *string // Performance tuning settings

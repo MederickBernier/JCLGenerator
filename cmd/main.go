@@ -13,6 +13,9 @@ func main() {
 	jobName := flag.String("jobname", "", "Job Name (1-8 uppercase characters)")
 	class := flag.String("class", "", "Job Class (A-Z)")
 	msgClass := flag.String("msgclass", "", "Message Class (A-Z, 0-9)")
+	execPGM := flag.String("execpgm", "IEFBR14", "Program to execute (PGM)")
+	dsName := flag.String("dsname", "", "Dataset Name")
+	disp := flag.String("disp", "SHR", "Disposition (NEW, OLD, SHR, MOD)")
 	outputFile := flag.String("output", "generated", "Output JCL filename (auto .jcl)")
 
 	flag.Parse() // Parse CLI flags
@@ -22,6 +25,9 @@ func main() {
 		JobName:  jobName,
 		Class:    class,
 		MsgClass: msgClass,
+		ExecPGM:  execPGM,
+		DSName:   dsName,
+		DISP:     disp,
 	}
 
 	// Validate input parameters

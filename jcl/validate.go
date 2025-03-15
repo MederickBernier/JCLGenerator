@@ -68,9 +68,13 @@ func validateDDParams(params JCLParameters) error {
 	dispPattern := `^(NEW|OLD|SHR|MOD)$`
 	spacePattern := `^[0-9]+$`
 
-	if params.DSName != nil && !regexp.MustCompile(dsNamePattern).MatchString(*params.DSName) {
-		return errors.New("invalid Dataset Name (DSN)")
+	// DSN should only be validated if provided
+	if params.DSName != nil && *params.DSName != "" {
+		if !regexp.MustCompile(dsNamePattern).MatchString(*params.DSName) {
+			return errors.New("invalid Dataset Name (DSN)")
+		}
 	}
+
 	if params.Volume != nil && !regexp.MustCompile(volumePattern).MatchString(*params.Volume) {
 		return errors.New("invalid Volume Serial")
 	}
@@ -80,6 +84,7 @@ func validateDDParams(params JCLParameters) error {
 	if params.Space != nil && !regexp.MustCompile(spacePattern).MatchString(*params.Space) {
 		return errors.New("invalid Space Allocation (must be numeric)")
 	}
+
 	return nil
 }
 

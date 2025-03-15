@@ -1,179 +1,159 @@
 //{{.JobName}} JOB (ACCT),'Generated JCL'
-{{- if .Class }}
+{{- if isNotEmpty .Class}}
 // CLASS={{.Class}}
 {{- end }}
-{{- if .MsgClass }}
+{{- if isNotEmpty .MsgClass}}
 // MSGCLASS={{.MsgClass}}
 {{- end }}
-{{- if .MsgLevel }}
+{{- if isNotEmpty .MsgLevel}}
 // MSGLEVEL={{.MsgLevel}}
 {{- end }}
-{{- if .Notify }}
+{{- if isNotEmpty .Notify}}
 // NOTIFY={{.Notify}}
 {{- end }}
-{{- if .Prty }}
+{{- if isNotEmpty .Prty}}
 // PRTY={{.Prty}}
 {{- end }}
-{{- if .Region }}
+{{- if isNotEmpty .Region}}
 // REGION={{.Region}}
 {{- end }}
-{{- if .Restart }}
+{{- if isNotEmpty .Restart}}
 // RESTART={{.Restart}}
 {{- end }}
-{{- if .Time }}
+{{- if isNotEmpty .Time}}
 // TIME={{.Time}}
 {{- end }}
-{{- if .TypeRun }}
+{{- if isNotEmpty .TypeRun}}
 // TYPRUN={{.TypeRun}}
 {{- end }}
-{{- if .User }}
+{{- if isNotEmpty .User}}
 // USER={{.User}}
 {{- end }}
 
-//STEP1 EXEC {{if .ExecPROC}}PROC={{.ExecPROC}}{{else}}PGM={{.ExecPGM}}{{end}}
-{{- if .ExecParm }}
+//STEP1 EXEC {{if isNotEmpty .ExecPROC}}PROC={{.ExecPROC}}{{else if isNotEmpty .ExecPGM}}PGM={{.ExecPGM}}{{end}}
+{{- if isNotEmpty .ExecParm}}
 // PARM={{.ExecParm}}
 {{- end }}
-{{- if .Cond }}
+{{- if isNotEmpty .Cond}}
 // COND={{.Cond}}
 {{- end }}
-{{- if .AddrSpc }}
+{{- if isNotEmpty .AddrSpc}}
 // ADDRSPC={{.AddrSpc}}
 {{- end }}
-{{- if .TimeStep }}
+{{- if isNotEmpty .TimeStep}}
 // TIME={{.TimeStep}}
 {{- end }}
 
 // DD Statements
-{{- if .DSName }}
-//DD01 DD DSN={{.DSName}},
-{{- if .DISP }}
-// DISP={{.DISP}},
-{{- end }}
-{{- if .UNIT }}
-// UNIT={{.UNIT}},
-{{- end }}
-{{- if .Volume }}
-// VOL={{.Volume}},
-{{- end }}
-{{- if .Space }}
-// SPACE={{.Space}}({{.SpaceUnit}}),
-{{- end }}
-{{- if .DCB }}
-// DCB={{.DCB}},
-{{- end }}
-{{- if .LRECL }}
-// LRECL={{.LRECL}},
-{{- end }}
-{{- if .BLKSIZE }}
-// BLKSIZE={{.BLKSIZE}},
-{{- end }}
-{{- if .RecFM }}
-// RECFM={{.RecFM}},
-{{- end }}
-{{- if .ExpDT }}
-// EXPDT={{.ExpDT}},
-{{- end }}
-{{- if .RetPD }}
-// RETPD={{.RetPD}}
-{{- end }}
+{{- if isNotEmpty .DSName}}
+//DD01 DD DSN={{.DSName}}
+{{- if isNotEmpty .DISP}},DISP={{.DISP}}{{end}}
+{{- if isNotEmpty .UNIT}},UNIT={{.UNIT}}{{end}}
+{{- if isNotEmpty .Volume}},VOL={{.Volume}}{{end}}
+{{- if isNotEmpty .Space}},SPACE={{.Space}}({{.SpaceUnit}}){{end}}
+{{- if isNotEmpty .DCB}},DCB={{.DCB}}{{end}}
+{{- if isNotEmpty .LRECL}},LRECL={{.LRECL}}{{end}}
+{{- if isNotEmpty .BLKSIZE}},BLKSIZE={{.BLKSIZE}}{{end}}
+{{- if isNotEmpty .RecFM}},RECFM={{.RecFM}}{{end}}
+{{- if isNotEmpty .ExpDT}},EXPDT={{.ExpDT}}{{end}}
+{{- if isNotEmpty .RetPD}},RETPD={{.RetPD}}{{end}}
 {{- end }}
 
 // SYSIN and SYSOUT
-{{- if .SysIn }}
+{{- if isNotEmpty .SysIn}}
 //SYSIN DD {{.SysIn}}
 {{- end }}
-{{- if .SysOut }}
+{{- if isNotEmpty .SysOut}}
 //SYSOUT DD SYSOUT={{.SysOut}}
 {{- end }}
 
 // JES2/JES3 Statements
-{{- if .JobParm }}
+{{- if isNotEmpty .JobParm}}
 // JOBPARM {{.JobParm}}
 {{- end }}
-{{- if .Output }}
+{{- if isNotEmpty .Output}}
 // OUTPUT {{.Output}}
 {{- end }}
-{{- if .Route }}
+{{- if isNotEmpty .Route}}
 // ROUTE {{.Route}}
 {{- end }}
-{{- if .Main }}
+{{- if isNotEmpty .Main}}
 // MAIN {{.Main}}
 {{- end }}
-{{- if .Format }}
+{{- if isNotEmpty .Format}}
 // FORMAT {{.Format}}
 {{- end }}
-{{- if .DataSet }}
+{{- if isNotEmpty .DataSet}}
 // DATASET {{.DataSet}}
 {{- end }}
 
 // Miscellaneous Parameters
-{{- if .AddrSpcExec }}
+{{- if isNotEmpty .AddrSpcExec}}
 // ADDRSPC EXEC={{.AddrSpcExec}}
 {{- end }}
-{{- if .Bytes }}
+{{- if isNotEmpty .Bytes}}
 // BYTES={{.Bytes}}
 {{- end }}
-{{- if .Lines }}
+{{- if isNotEmpty .Lines}}
 // LINES={{.Lines}}
 {{- end }}
-{{- if .Pages }}
+{{- if isNotEmpty .Pages}}
 // PAGES={{.Pages}}
 {{- end }}
-{{- if .Perform }}
+{{- if isNotEmpty .Perform}}
 // PERFORM={{.Perform}}
 {{- end }}
-{{- if .RD }}
+{{- if isNotEmpty .RD}}
 // RD={{.RD}}
 {{- end }}
-{{- if .Chars }}
+{{- if isNotEmpty .Chars}}
 // CHARS={{.Chars}}
 {{- end }}
-{{- if .FCB }}
+{{- if isNotEmpty .FCB}}
 // FCB={{.FCB}}
 {{- end }}
-{{- if .Flash }}
+{{- if isNotEmpty .Flash}}
 // FLASH={{.Flash}}
 {{- end }}
-{{- if .Forms }}
+{{- if isNotEmpty .Forms}}
 // FORMS={{.Forms}}
 {{- end }}
-{{- if .Modify }}
+{{- if isNotEmpty .Modify}}
 // MODIFY={{.Modify}}
 {{- end }}
-{{- if .PrtAttrs }}
+{{- if isNotEmpty .PrtAttrs}}
 // PRTATTRS={{.PrtAttrs}}
 {{- end }}
-{{- if .UCS }}
+{{- if isNotEmpty .UCS}}
 // UCS={{.UCS}}
 {{- end }}
-{{- if .Writer }}
+{{- if isNotEmpty .Writer}}
 // WRITER={{.Writer}}
 {{- end }}
 
 // Job Steps (Future Enhancement - v0.3)
-{{- range .Steps }}
+{{- range .Steps}}
 //{{.StepName}} EXEC PGM={{.ExecPGM}}
-{{- if .ExecParm }}
+{{- if isNotEmpty .ExecParm}}
 // PARM={{.ExecParm}}
 {{- end }}
-{{- if .Cond }}
+{{- if isNotEmpty .Cond}}
 // COND={{.Cond}}
 {{- end }}
-{{- if .Time }}
+{{- if isNotEmpty .Time}}
 // TIME={{.Time}}
 {{- end }}
 {{- end }}
 
 // System-Level Overrides
-{{- if .SystemOverrides }}
-{{- if .SystemOverrides.AddrSpace }}
-// ADDRSPACE={{.SystemOverrides.AddrSpace}}
+{{- with .SystemOverrides }}
+{{- with .AddrSpace}}
+// ADDRSPACE={{.}}
 {{- end }}
-{{- if .SystemOverrides.Perform }}
-// PERFORM={{.SystemOverrides.Perform}}
+{{- with .Perform}}
+// PERFORM={{.}}
 {{- end }}
-{{- if .SystemOverrides.RD }}
-// RD={{.SystemOverrides.RD}}
+{{- with .RD}}
+// RD={{.}}
 {{- end }}
 {{- end }}
