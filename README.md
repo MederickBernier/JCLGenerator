@@ -5,6 +5,8 @@ A **command-line tool** to generate **JCL (Job Control Language)** scripts dynam
 ## 📌 Features
 ✅ **Fully optional parameters** – Only specified parameters are included in the final JCL.  
 ✅ **JCL syntax compliance** – Ensures generated JCL is valid and structured properly.  
+✅ **Interactive Mode** – Prompts for missing values when `-interactive` or `-i` is used.  
+✅ **Alias Flags** – Shortened versions of common flags for easier use.  
 ✅ **Cross-platform support** – Available for Windows, Linux, and macOS.  
 ✅ **Automated builds & releases** – Precompiled binaries available for easy download.  
 ✅ **Future roadmap** – Plans to support YAML input, job steps, and advanced system overrides in upcoming versions.  
@@ -39,6 +41,18 @@ Run the JCL Generator with command-line arguments:
 ```bash
 jclgen -jobname=TESTJOB -class=A -msgclass=X -output=myjob
 ```
+### **🔹 Interactive Mode (New in v0.2)**  
+Run without flags to enter interactive mode:  
+```bash
+jclgen -interactive  
+jclgen -i  
+```
+It will prompt for missing values:
+
+Enter Job Name: TESTJOB  
+Enter Class: A  
+Enter MsgClass: X  
+Enter Output Filename: myjob  
 
 ### **Example Output**
 ```
@@ -48,13 +62,20 @@ jclgen -jobname=TESTJOB -class=A -msgclass=X -output=myjob
 
 //STEP1 EXEC PGM=IEFBR14
 ```
+---
 
-| **Flag**     | **Description**                            | **Example**          |
-|-------------|------------------------------------------|----------------------|
-| `-jobname`  | Job name (1-8 uppercase characters)      | `-jobname=TESTJOB`  |
-| `-class`    | Job execution class (A-Z)               | `-class=A`          |
-| `-msgclass` | Message output class (A-Z, 0-9)         | `-msgclass=X`       |
-| `-output`   | Output JCL filename (without `.jcl`)   | `-output=myjob`     |
+### **🔹 Update Flags Table**  
+📍 **Location**: Under **"## 🎯 Usage"**, in the flags table.  
+📌 **Modification**: **Add alias flags and interactive flag**
+
+| **Flag**            | **Alias** | **Description**                       | **Example**          |
+|---------------------|----------|---------------------------------------|----------------------|
+| -jobname         | -jn     | Job name (1-8 uppercase characters)  | -jobname=TESTJOB  |
+| -class           | -c      | Job execution class (A-Z)            | -class=A          |
+| -msgclass        | -mc     | Message output class (A-Z, 0-9)      | -msgclass=X       |
+| -output          | -o      | Output JCL filename (without .jcl) | -output=myjob     |
+| -interactive     | -i      | Enables interactive input mode       | -i                |
+
 
 For advanced parameters like DD statements, JES2, system overrides, future versions will include YAML support.
 
@@ -88,9 +109,9 @@ Roadmap includes YAML support, interactive input mode, and JCL validation improv
 ```markdown
 ## 🔄 Versioning & Releases
 
-- **v0.1** – Core functionality, CLI-based JCL generation.
+- **v0.1** – Core functionality, CLI-based JCL generation.  
+- **v0.2** – Interactive CLI mode, alias flags for ease of use.  
 - **Upcoming:**  
-  - v0.2 – Interactive CLI mode.  
   - v0.3 – YAML import & job steps.  
 
 To download a specific version, visit the [Releases](https://github.com/MederickBernier/JCLGenerator/releases) page.

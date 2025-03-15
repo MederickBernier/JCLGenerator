@@ -1,45 +1,32 @@
 package main
 
 import (
-	"flag"
-	"fmt"
-	"log"
-
+	"JCLGenerator/helpers"
 	"JCLGenerator/jcl"
+	"fmt"
 )
 
 func main() {
-	// Define CLI flags
-	jobName := flag.String("jobname", "", "Job Name (1-8 uppercase characters)")
-	class := flag.String("class", "", "Job Class (A-Z)")
-	msgClass := flag.String("msgclass", "", "Message Class (A-Z, 0-9)")
-	execPGM := flag.String("execpgm", "IEFBR14", "Program to execute (PGM)")
-	dsName := flag.String("dsname", "", "Dataset Name")
-	disp := flag.String("disp", "SHR", "Disposition (NEW, OLD, SHR, MOD)")
-	outputFile := flag.String("output", "generated", "Output JCL filename (auto .jcl)")
+	config := helpers.ParseFlags()
 
-	flag.Parse() // Parse CLI flags
-
-	// Create JCL parameters struct
-	params := jcl.JCLParameters{
-		JobName:  jobName,
-		Class:    class,
-		MsgClass: msgClass,
-		ExecPGM:  execPGM,
-		DSName:   dsName,
-		DISP:     disp,
+	// If interactive mode is enabled, ask for inputs
+	if config.Interactive {
+		helpers.InteractiveInput(&config)
 	}
 
-	// Validate input parameters
-	if err := jcl.ValidateJCL(params); err != nil {
-		log.Fatalf("Validation error: %v", err)
+	// Convert Config (CLI input) into JCLParameters with pointers
+	jclParams := jcl.JCLParameters{
+		JobName:  helpers.ToPtr(config.JobName),
+		Class:    helpers.ToPtr(config.Class),
+		MsgClass: helpers.ToPtr(config.MsgClass),
 	}
 
-	// Generate the JCL file
-	if err := jcl.GenerateJCL(*outputFile, params); err != nil {
-		log.Fatalf("Error generating JCL: %v", err)
+	// Generate JCL file
+	err := jcl.GenerateJCL(config.Output, jclParams)
+	if err != nil {
+		fmt.Println("❌ Error generating JCL:", err)
+		return
 	}
 
-	// Print success message
-	fmt.Printf("✅ JCL generated successfully: %s.jcl\n", *outputFile)
+	fmt.Println("✅ JCL file successfully created:", config.Output)
 }
