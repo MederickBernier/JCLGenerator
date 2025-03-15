@@ -56,6 +56,7 @@ jobs:
 
       - name: Create Release Directory
         run: mkdir -p release
+        shell: bash
 
       - name: Package as ZIP (Linux/macOS)
         run: zip -r release/jclgen-${{ matrix.goos }}.zip jclgen${{ matrix.ext }}
@@ -88,7 +89,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: release/**/*.zip
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.FGPAT_TOKEN }}
           tag_name: ${{ github.ref }}
           name: "JCL Generator ${{ github.ref_name }}"
           draft: false
