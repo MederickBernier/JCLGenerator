@@ -2,6 +2,8 @@ package jcl
 
 // JCLParameters defines the structure for JCL parameterization.
 type JCLParameters struct {
+	EnableComments bool // Include comments in the generated JCL
+
 	// JOB Statement Parameters
 	JobName  *string // Job name (1-8 characters)
 	Class    *string // Execution class (A-Z)

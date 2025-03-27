@@ -1,0 +1,19 @@
+job_name: SAMPLEJOB
+account_number: ACCT123
+job_description: "Sample job from YAML"
+class: A
+msg_class: X
+enable_comments: true
+exec_pgm: IEFBR14
+ds_name: MY.DATA.SET
+disp: (NEW,CATLG,DELETE)
+unit: SYSDA
+space: (TRK,(1,1))
+sysout: A
+
+steps:
+  - step_name: STEP01
+    exec_pgm: IEFBR14
+    exec_parm: ""
+    cond: ""
+    time: "5"

@@ -1,27 +1,34 @@
-# 🏗️ JCL Generator v0.1
+# 🏗️ JCL Generator v0.3
 
-A **command-line tool** to generate **JCL (Job Control Language)** scripts dynamically based on user inputs. Designed for **mainframe job automation**, this tool simplifies the creation of structured JCL jobs without manually writing extensive scripts.
+A **command-line tool** to generate **JCL (Job Control Language)** scripts dynamically based on user input or configuration files. Designed for **mainframe job automation**, this tool simplifies JCL creation for developers, architects, and operations engineers.
+
+---
 
 ## 📌 Features
-✅ **Fully optional parameters** – Only specified parameters are included in the final JCL.  
-✅ **JCL syntax compliance** – Ensures generated JCL is valid and structured properly.  
-✅ **Interactive Mode** – Prompts for missing values when `-interactive` or `-i` is used.  
-✅ **Alias Flags** – Shortened versions of common flags for easier use.  
-✅ **Cross-platform support** – Available for Windows, Linux, and macOS.  
-✅ **Automated builds & releases** – Precompiled binaries available for easy download.  
-✅ **Future roadmap** – Plans to support YAML input, job steps, and advanced system overrides in upcoming versions.  
+
+✅ **Fully optional parameters** – Only defined parameters are rendered in the final JCL  
+✅ **JCL syntax compliance** – Ensures generated jobs are valid for mainframe execution  
+✅ **Interactive Mode** – Prompt-based input when `-interactive` or `-i` is used  
+✅ **YAML Config Support (v0.3)** – Load parameters from `config.yaml` via `--from-yaml`  
+✅ **Short & long flag aliases** – Flexible and ergonomic CLI interface  
+✅ **Cross-platform** – Windows, Linux, macOS supported  
+✅ **Easy builds** – Build with Go or download from GitHub releases
+
+---
 
 ## 🚀 Installation
 
-### **🔹 Option 1: Download Precompiled Binary**
-1. **Go to the [Releases](https://github.com/MederickBernier/JCLGenerator/releases) page.**
-2. **Download the appropriate ZIP file** for your OS:
-   - **Windows** → `jclgen-windows.zip`
-   - **Linux** → `jclgen-linux.zip`
-   - **macOS** → `jclgen-darwin.zip`
-3. **Extract the ZIP** and move the binary to a directory in your `$PATH` (optional).
+### 🔹 Option 1: Download Precompiled Binary
 
-### **🔹 Option 2: Build from Source (Requires Go)**
+1. Go to the [Releases](https://github.com/MederickBernier/JCLGenerator/releases)
+2. Download the binary for your platform:
+   - Windows → `jclgen-windows.zip`
+   - Linux → `jclgen-linux.zip`
+   - macOS → `jclgen-darwin.zip`
+3. Extract and (optionally) move to a directory in your `$PATH`
+
+### 🔹 Option 2: Build from Source
+
 ```bash
 git clone https://github.com/MederickBernier/JCLGenerator.git
 cd JCLGenerator
@@ -29,102 +36,118 @@ go mod tidy
 go build -o jclgen ./cmd/main.go
 ```
 
-
 ---
 
-### **📌 Usage**
-```markdown
 ## 🎯 Usage
 
-Run the JCL Generator with command-line arguments:
+### 🔸 Basic CLI Mode
 
 ```bash
 jclgen -jobname=TESTJOB -class=A -msgclass=X -output=myjob
 ```
-### **🔹 Interactive Mode (New in v0.2)**  
-Run without flags to enter interactive mode:  
+
+### 🔸 Interactive Mode
+
 ```bash
-jclgen -interactive  
-jclgen -i  
+jclgen -interactive
+# or
+jclgen -i
 ```
-It will prompt for missing values:
 
-Enter Job Name: TESTJOB  
-Enter Class: A  
-Enter MsgClass: X  
-Enter Output Filename: myjob  
+You'll be prompted to enter values like:
 
-### **Example Output**
+```text
+Enter Job Name: TESTJOB
+Enter Class: A
+Enter MsgClass: X
+Enter Output Filename: myjob
 ```
-//TESTJOB JOB (ACCT),'Generated JCL'
-// CLASS=A
-// MSGCLASS=X
 
-//STEP1 EXEC PGM=IEFBR14
+### 🔸 YAML Input (New in v0.3)
+
+Prepare a `config.yaml` like:
+
+```yaml
+job_name: TEST
+account_number: ACCT123
+job_description: "Generated from YAML"
+class: A
+msg_class: X
+enable_comments: true
+exec_pgm: IEFBR14
+ds_name: MY.DATA.SET
+disp: (NEW,CATLG,DELETE)
+steps:
+  - step_name: STEP1
+    exec_pgm: IEFBR14
 ```
+See [`examples/config.yaml`](examples/config.yaml) for a sample config.
+
+Then run:
+
+```bash
+jclgen --from-yaml=config.yaml
+# or
+jclgen -fy=config.yaml
+```
+
 ---
 
-### **🔹 Update Flags Table**  
-📍 **Location**: Under **"## 🎯 Usage"**, in the flags table.  
-📌 **Modification**: **Add alias flags and interactive flag**
+## 🧾 Flags Table
 
-| **Flag**            | **Alias** | **Description**                       | **Example**          |
-|---------------------|----------|---------------------------------------|----------------------|
-| -jobname         | -jn     | Job name (1-8 uppercase characters)  | -jobname=TESTJOB  |
-| -class           | -c      | Job execution class (A-Z)            | -class=A          |
-| -msgclass        | -mc     | Message output class (A-Z, 0-9)      | -msgclass=X       |
-| -output          | -o      | Output JCL filename (without .jcl) | -output=myjob     |
-| -interactive     | -i      | Enables interactive input mode       | -i                |
-
-
-For advanced parameters like DD statements, JES2, system overrides, future versions will include YAML support.
-
+| **Flag**         | **Alias** | **Description**                        | **Example**                |
+|------------------|-----------|----------------------------------------|----------------------------|
+| `--jobname`      | `-j`      | JCL Job name (1-8 chars)               | `--jobname=MYJOB`          |
+| `--class`        | `-c`      | Execution class (A-Z)                  | `--class=A`                |
+| `--msgclass`     | `-m`      | Message class                          | `--msgclass=X`             |
+| `--output`       | `-o`      | Output filename (.jcl extension added) | `--output=myjob`           |
+| `--interactive`  | `-i`      | Launch in interactive mode             | `--interactive`            |
+| `--with-comments`| `-wc`     | Toggle verbose comments in output      | `--with-comments=false`    |
+| `--from-yaml`    | `-fy`     | Load configuration from YAML file      | `--from-yaml=config.yaml`  |
 
 ---
 
-### **📌 Development & Contribution**
-```markdown
 ## 🛠️ Development & Contribution
 
-### **🔹 Requirements**
-- **Go 1.24 or higher**
-- Git installed for cloning and versioning
+### Requirements
+- Go 1.21+  
+- Git
 
-### **🔹 Building the Project**
+### Building Locally
+
 ```bash
+go mod tidy
 go build -o jclgen ./cmd/main.go
 ```
 
-### **📌 Running Tests**
-(Currently, validation functions are embedded but future versions will include unit tests.)
+### Roadmap
 
-### **📌 Contributing**
-Want to help? Open an issue, fork the repo, and submit a pull request!
-Roadmap includes YAML support, interactive input mode, and JCL validation improvements.
-
+| Version | Features |
+|---------|----------|
+| **v0.1** | Base CLI support |
+| **v0.2** | Interactive mode + alias flags |
+| ✅ **v0.3** | YAML input support + job steps scaffolding |
+| 🚧 **v0.4** | Fully interactive wizard mode (planned) |
+| 🚧 **v0.5** | GUI/Browser interface (experimental idea) |
 
 ---
 
-### **📌 Versioning & Releases**
-```markdown
-## 🔄 Versioning & Releases
+## 🧪 Testing
 
-- **v0.1** – Core functionality, CLI-based JCL generation.  
-- **v0.2** – Interactive CLI mode, alias flags for ease of use.  
-- **Upcoming:**  
-  - v0.3 – YAML import & job steps.  
+Unit tests will be added in future versions for validation logic and YAML parsing. For now, test by running various flag combinations or YAML input files.
 
-To download a specific version, visit the [Releases](https://github.com/MederickBernier/JCLGenerator/releases) page.
-```
+---
 
 ## 📜 License
 
-This project is licensed under the **MIT License** – you are free to modify, distribute, and use it.
+MIT License – Free to use, modify, and distribute.
 
+---
 
-## 🏛️ Credits & Acknowledgments
+## 🏛️ Credits
 
-Developed by **Mederick Bernier**, designed to **simplify JCL script generation** for mainframe environments.  
-For questions, feel free to reach out via GitHub issues.
+Developed by **Mederick Bernier** to support legacy modernization, JCL automation, and structured mainframe workflows.
 
-🚀 Happy JCL scripting!
+---
+
+> ⭐ Star the repo if this tool helps you!

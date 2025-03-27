@@ -1,159 +1,226 @@
+{{- if .EnableComments }}
+//* ========== JOB CARD ==========
+{{- end }}
 //{{.JobName}} JOB (ACCT),'Generated JCL'
-{{- if isNotEmpty .Class}}
-// CLASS={{.Class}}
-{{- end }}
-{{- if isNotEmpty .MsgClass}}
-// MSGCLASS={{.MsgClass}}
-{{- end }}
-{{- if isNotEmpty .MsgLevel}}
-// MSGLEVEL={{.MsgLevel}}
-{{- end }}
-{{- if isNotEmpty .Notify}}
-// NOTIFY={{.Notify}}
-{{- end }}
-{{- if isNotEmpty .Prty}}
-// PRTY={{.Prty}}
-{{- end }}
-{{- if isNotEmpty .Region}}
-// REGION={{.Region}}
-{{- end }}
-{{- if isNotEmpty .Restart}}
-// RESTART={{.Restart}}
-{{- end }}
-{{- if isNotEmpty .Time}}
-// TIME={{.Time}}
-{{- end }}
-{{- if isNotEmpty .TypeRun}}
-// TYPRUN={{.TypeRun}}
-{{- end }}
-{{- if isNotEmpty .User}}
-// USER={{.User}}
+
+{{- if isNotEmpty .Class }}
+  {{- if .EnableComments }}//* CLASS: {{.Class}}{{ end }}
+CLASS={{.Class}}
 {{- end }}
 
+{{- if isNotEmpty .MsgClass }}
+  {{- if .EnableComments }}//* MSGCLASS: {{.MsgClass}}{{ end }}
+MSGCLASS={{.MsgClass}}
+{{- end }}
+
+{{- if isNotEmpty .MsgLevel }}
+  {{- if .EnableComments }}//* MSGLEVEL: {{.MsgLevel}}{{ end }}
+MSGLEVEL={{.MsgLevel}}
+{{- end }}
+
+{{- if isNotEmpty .Notify }}
+  {{- if .EnableComments }}//* NOTIFY: {{.Notify}}{{ end }}
+NOTIFY={{.Notify}}
+{{- end }}
+
+{{- if isNotEmpty .Prty }}
+  {{- if .EnableComments }}//* PRTY: {{.Prty}}{{ end }}
+PRTY={{.Prty}}
+{{- end }}
+
+{{- if isNotEmpty .Region }}
+  {{- if .EnableComments }}//* REGION: {{.Region}}{{ end }}
+REGION={{.Region}}
+{{- end }}
+
+{{- if isNotEmpty .Restart }}
+  {{- if .EnableComments }}//* RESTART: {{.Restart}}{{ end }}
+RESTART={{.Restart}}
+{{- end }}
+
+{{- if isNotEmpty .Time }}
+  {{- if .EnableComments }}//* TIME: {{.Time}}{{ end }}
+TIME={{.Time}}
+{{- end }}
+
+{{- if isNotEmpty .TypeRun }}
+  {{- if .EnableComments }}//* TYPRUN: {{.TypeRun}}{{ end }}
+TYPRUN={{.TypeRun}}
+{{- end }}
+
+{{- if isNotEmpty .User }}
+  {{- if .EnableComments }}//* USER: {{.User}}{{ end }}
+USER={{.User}}
+{{- end }}
+
+{{- if .EnableComments }}
+//* ========== STEP 1 ==========
+{{- end }}
 //STEP1 EXEC {{if isNotEmpty .ExecPROC}}PROC={{.ExecPROC}}{{else if isNotEmpty .ExecPGM}}PGM={{.ExecPGM}}{{end}}
-{{- if isNotEmpty .ExecParm}}
-// PARM={{.ExecParm}}
-{{- end }}
-{{- if isNotEmpty .Cond}}
-// COND={{.Cond}}
-{{- end }}
-{{- if isNotEmpty .AddrSpc}}
-// ADDRSPC={{.AddrSpc}}
-{{- end }}
-{{- if isNotEmpty .TimeStep}}
-// TIME={{.TimeStep}}
+
+{{- if isNotEmpty .ExecParm }}
+  {{- if .EnableComments }}//* PARM: {{.ExecParm}}{{ end }}
+PARM={{.ExecParm}}
 {{- end }}
 
-// DD Statements
-{{- if isNotEmpty .DSName}}
-//DD01 DD DSN={{.DSName}}
-{{- if isNotEmpty .DISP}},DISP={{.DISP}}{{end}}
-{{- if isNotEmpty .UNIT}},UNIT={{.UNIT}}{{end}}
-{{- if isNotEmpty .Volume}},VOL={{.Volume}}{{end}}
-{{- if isNotEmpty .Space}},SPACE={{.Space}}({{.SpaceUnit}}){{end}}
-{{- if isNotEmpty .DCB}},DCB={{.DCB}}{{end}}
-{{- if isNotEmpty .LRECL}},LRECL={{.LRECL}}{{end}}
-{{- if isNotEmpty .BLKSIZE}},BLKSIZE={{.BLKSIZE}}{{end}}
-{{- if isNotEmpty .RecFM}},RECFM={{.RecFM}}{{end}}
-{{- if isNotEmpty .ExpDT}},EXPDT={{.ExpDT}}{{end}}
-{{- if isNotEmpty .RetPD}},RETPD={{.RetPD}}{{end}}
+{{- if isNotEmpty .Cond }}
+  {{- if .EnableComments }}//* COND: {{.Cond}}{{ end }}
+COND={{.Cond}}
 {{- end }}
 
-// SYSIN and SYSOUT
-{{- if isNotEmpty .SysIn}}
+{{- if isNotEmpty .AddrSpc }}
+  {{- if .EnableComments }}//* ADDRSPC: {{.AddrSpc}}{{ end }}
+ADDRSPC={{.AddrSpc}}
+{{- end }}
+
+{{- if isNotEmpty .TimeStep }}
+  {{- if .EnableComments }}//* TIME: {{.TimeStep}}{{ end }}
+TIME={{.TimeStep}}
+{{- end }}
+
+{{- if isNotEmpty .DSName }}
+  {{- if .EnableComments }}
+//* ========== DD STATEMENT ==========
+  {{- end }}
+//DD01 DD DSN={{.DSName}}{{if isNotEmpty .DISP}},DISP={{.DISP}}{{end}}{{if isNotEmpty .UNIT}},UNIT={{.UNIT}}{{end}}{{if isNotEmpty .Volume}},VOL={{.Volume}}{{end}}{{if isNotEmpty .Space}},SPACE={{.Space}}({{.SpaceUnit}}){{end}}{{if isNotEmpty .DCB}},DCB={{.DCB}}{{end}}{{if isNotEmpty .LRECL}},LRECL={{.LRECL}}{{end}}{{if isNotEmpty .BLKSIZE}},BLKSIZE={{.BLKSIZE}}{{end}}{{if isNotEmpty .RecFM}},RECFM={{.RecFM}}{{end}}{{if isNotEmpty .ExpDT}},EXPDT={{.ExpDT}}{{end}}{{if isNotEmpty .RetPD}},RETPD={{.RetPD}}{{end}}
+{{- end }}
+
+{{- if isNotEmpty .SysIn }}
+  {{- if .EnableComments }}//* SYSIN: {{.SysIn}}{{ end }}
 //SYSIN DD {{.SysIn}}
 {{- end }}
-{{- if isNotEmpty .SysOut}}
+
+{{- if isNotEmpty .SysOut }}
+  {{- if .EnableComments }}//* SYSOUT: {{.SysOut}}{{ end }}
 //SYSOUT DD SYSOUT={{.SysOut}}
 {{- end }}
 
-// JES2/JES3 Statements
-{{- if isNotEmpty .JobParm}}
-// JOBPARM {{.JobParm}}
-{{- end }}
-{{- if isNotEmpty .Output}}
-// OUTPUT {{.Output}}
-{{- end }}
-{{- if isNotEmpty .Route}}
-// ROUTE {{.Route}}
-{{- end }}
-{{- if isNotEmpty .Main}}
-// MAIN {{.Main}}
-{{- end }}
-{{- if isNotEmpty .Format}}
-// FORMAT {{.Format}}
-{{- end }}
-{{- if isNotEmpty .DataSet}}
-// DATASET {{.DataSet}}
+{{- if isNotEmpty .JobParm }}
+  {{- if .EnableComments }}//* JOBPARM: {{.JobParm}}{{ end }}
+JOBPARM {{.JobParm}}
 {{- end }}
 
-// Miscellaneous Parameters
-{{- if isNotEmpty .AddrSpcExec}}
-// ADDRSPC EXEC={{.AddrSpcExec}}
-{{- end }}
-{{- if isNotEmpty .Bytes}}
-// BYTES={{.Bytes}}
-{{- end }}
-{{- if isNotEmpty .Lines}}
-// LINES={{.Lines}}
-{{- end }}
-{{- if isNotEmpty .Pages}}
-// PAGES={{.Pages}}
-{{- end }}
-{{- if isNotEmpty .Perform}}
-// PERFORM={{.Perform}}
-{{- end }}
-{{- if isNotEmpty .RD}}
-// RD={{.RD}}
-{{- end }}
-{{- if isNotEmpty .Chars}}
-// CHARS={{.Chars}}
-{{- end }}
-{{- if isNotEmpty .FCB}}
-// FCB={{.FCB}}
-{{- end }}
-{{- if isNotEmpty .Flash}}
-// FLASH={{.Flash}}
-{{- end }}
-{{- if isNotEmpty .Forms}}
-// FORMS={{.Forms}}
-{{- end }}
-{{- if isNotEmpty .Modify}}
-// MODIFY={{.Modify}}
-{{- end }}
-{{- if isNotEmpty .PrtAttrs}}
-// PRTATTRS={{.PrtAttrs}}
-{{- end }}
-{{- if isNotEmpty .UCS}}
-// UCS={{.UCS}}
-{{- end }}
-{{- if isNotEmpty .Writer}}
-// WRITER={{.Writer}}
+{{- if isNotEmpty .Output }}
+  {{- if .EnableComments }}//* OUTPUT: {{.Output}}{{ end }}
+OUTPUT {{.Output}}
 {{- end }}
 
-// Job Steps (Future Enhancement - v0.3)
-{{- range .Steps}}
+{{- if isNotEmpty .Route }}
+  {{- if .EnableComments }}//* ROUTE: {{.Route}}{{ end }}
+ROUTE {{.Route}}
+{{- end }}
+
+{{- if isNotEmpty .Main }}
+  {{- if .EnableComments }}//* MAIN: {{.Main}}{{ end }}
+MAIN {{.Main}}
+{{- end }}
+
+{{- if isNotEmpty .Format }}
+  {{- if .EnableComments }}//* FORMAT: {{.Format}}{{ end }}
+FORMAT {{.Format}}
+{{- end }}
+
+{{- if isNotEmpty .DataSet }}
+  {{- if .EnableComments }}//* DATASET: {{.DataSet}}{{ end }}
+DATASET {{.DataSet}}
+{{- end }}
+
+{{- if isNotEmpty .AddrSpcExec }}
+  {{- if .EnableComments }}//* ADDRSPC EXEC: {{.AddrSpcExec}}{{ end }}
+ADDRSPC EXEC={{.AddrSpcExec}}
+{{- end }}
+
+{{- if isNotEmpty .Bytes }}
+  {{- if .EnableComments }}//* BYTES: {{.Bytes}}{{ end }}
+BYTES={{.Bytes}}
+{{- end }}
+
+{{- if isNotEmpty .Lines }}
+  {{- if .EnableComments }}//* LINES: {{.Lines}}{{ end }}
+LINES={{.Lines}}
+{{- end }}
+
+{{- if isNotEmpty .Pages }}
+  {{- if .EnableComments }}//* PAGES: {{.Pages}}{{ end }}
+PAGES={{.Pages}}
+{{- end }}
+
+{{- if isNotEmpty .Perform }}
+  {{- if .EnableComments }}//* PERFORM: {{.Perform}}{{ end }}
+PERFORM={{.Perform}}
+{{- end }}
+
+{{- if isNotEmpty .RD }}
+  {{- if .EnableComments }}//* RD: {{.RD}}{{ end }}
+RD={{.RD}}
+{{- end }}
+
+{{- if isNotEmpty .Chars }}
+  {{- if .EnableComments }}//* CHARS: {{.Chars}}{{ end }}
+CHARS={{.Chars}}
+{{- end }}
+
+{{- if isNotEmpty .FCB }}
+  {{- if .EnableComments }}//* FCB: {{.FCB}}{{ end }}
+FCB={{.FCB}}
+{{- end }}
+
+{{- if isNotEmpty .Flash }}
+  {{- if .EnableComments }}//* FLASH: {{.Flash}}{{ end }}
+FLASH={{.Flash}}
+{{- end }}
+
+{{- if isNotEmpty .Forms }}
+  {{- if .EnableComments }}//* FORMS: {{.Forms}}{{ end }}
+FORMS={{.Forms}}
+{{- end }}
+
+{{- if isNotEmpty .Modify }}
+  {{- if .EnableComments }}//* MODIFY: {{.Modify}}{{ end }}
+MODIFY={{.Modify}}
+{{- end }}
+
+{{- if isNotEmpty .PrtAttrs }}
+  {{- if .EnableComments }}//* PRTATTRS: {{.PrtAttrs}}{{ end }}
+PRTATTRS={{.PrtAttrs}}
+{{- end }}
+
+{{- if isNotEmpty .UCS }}
+  {{- if .EnableComments }}//* UCS: {{.UCS}}{{ end }}
+UCS={{.UCS}}
+{{- end }}
+
+{{- if isNotEmpty .Writer }}
+  {{- if .EnableComments }}//* WRITER: {{.Writer}}{{ end }}
+WRITER={{.Writer}}
+{{- end }}
+
+{{- range .Steps }}
+  {{- if $.EnableComments }}
+//* === Additional Job Step: {{.StepName}} ===
+  {{- end }}
 //{{.StepName}} EXEC PGM={{.ExecPGM}}
-{{- if isNotEmpty .ExecParm}}
-// PARM={{.ExecParm}}
-{{- end }}
-{{- if isNotEmpty .Cond}}
-// COND={{.Cond}}
-{{- end }}
-{{- if isNotEmpty .Time}}
-// TIME={{.Time}}
-{{- end }}
+  {{- if isNotEmpty .ExecParm }}PARM={{.ExecParm}}{{ end }}
+  {{- if isNotEmpty .Cond }}COND={{.Cond}}{{ end }}
+  {{- if isNotEmpty .Time }}TIME={{.Time}}{{ end }}
 {{- end }}
 
 // System-Level Overrides
 {{- with .SystemOverrides }}
-{{- with .AddrSpace}}
-// ADDRSPACE={{.}}
+  {{- with .AddrSpace }}
+    {{- if $.EnableComments }}//* ADDRSPACE Override: {{.}}{{ end }}
+ADDRSPACE={{.}}
+  {{- end }}
+  {{- with .Perform }}
+    {{- if $.EnableComments }}//* PERFORM Override: {{.}}{{ end }}
+PERFORM={{.}}
+  {{- end }}
+  {{- with .RD }}
+    {{- if $.EnableComments }}//* RD Override: {{.}}{{ end }}
+RD={{.}}
+  {{- end }}
 {{- end }}
-{{- with .Perform}}
-// PERFORM={{.}}
-{{- end }}
-{{- with .RD}}
-// RD={{.}}
-{{- end }}
+
+{{- if .EnableComments }}
+//* ====== END OF GENERATED JCL ======
 {{- end }}
